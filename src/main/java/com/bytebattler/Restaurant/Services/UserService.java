@@ -6,6 +6,8 @@ import com.bytebattler.Restaurant.Models.UserModel;
 import com.bytebattler.Restaurant.Models.UserRoles;
 import com.bytebattler.Restaurant.Repository.RoleRepository;
 import com.bytebattler.Restaurant.Repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,7 @@ import java.util.Set;
 
 @Service
 public class UserService {
-
+	private static Logger logger = LoggerFactory.getLogger(UserService.class);
 	@Autowired
 	private UserRepository userRepository;
 
@@ -25,16 +27,24 @@ public class UserService {
 
 
 	@Transactional
-	public UserModel saveUser(UserModel user) {
+	public boolean saveUser(UserModel user) {
 		Set<UserRoles> roles = new HashSet<>();
 
-		if (user.getRoles() != null) { // Fix the null check
+		UserRoles checkRole = roleRepository.findByRoleName("USER");
+		if (checkRole == null) {
+			UserRoles defaultRole = new UserRoles();
+			defaultRole.setRoleName("USER");
+			checkRole = roleRepository.save(defaultRole); // Save the default role
+			logger.info("Created default role: USER");
+		}
+		roles.add(checkRole);
+
+		if (user.getRoles() != null) {
 			for (UserRoles role : user.getRoles()) {
 				UserRoles existingRole = roleRepository.findByRoleName(role.getRoleName());
 				if (existingRole != null) {
 					roles.add(existingRole);
 				} else {
-					// Create a new role if it doesn't exist
 					UserRoles newRole = new UserRoles();
 					newRole.setRoleName(role.getRoleName());
 					UserRoles savedRole = roleRepository.save(newRole);
@@ -43,11 +53,6 @@ public class UserService {
 			}
 		}
 
-		// Always add the default role
-		UserRoles defaultRole = roleRepository.findByRoleName("USER");
-		if (defaultRole != null) {
-			roles.add(defaultRole);
-		}
 
 		if (!user.getPassword().isEmpty()) {
 //			user.setPassword(passwordEncoder.encode(user.getPassword())); // Use PasswordEncoder
@@ -57,9 +62,12 @@ public class UserService {
 		user.setUser_id(null);
 		validateUser(user);
 		try {
-			return userRepository.save(user);
+			userRepository.save(user);
+			return true;
 		} catch (DataIntegrityViolationException ex) {
-			throw new UserAlreadyExistsException("User  with this username or email already exists");
+			logger.error("Duplicate User", new UserAlreadyExistsException("User  with this username or email already exists"));
+			return false;
+
 		}
 	}
 
@@ -68,12 +76,12 @@ public class UserService {
 			throw new InvalidUserException("Username must be at least 1 character long");
 		}
 		if (user.getUserEmail() != null && !isValidEmail(user.getUserEmail())) {
-			throw new InvalidUserException("Inv alid email format");
+			throw new InvalidUserException("Invalid email format");
 		}
 	}
 
 	private boolean isValidEmail(String email) {
-		String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"; // Fix the regex
+		String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 		return email.matches(emailRegex);
 	}
 }
