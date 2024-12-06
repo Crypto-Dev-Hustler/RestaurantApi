@@ -29,16 +29,14 @@ public class Profile {
 			if (users.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.NO_CONTENT).body("There is no USERS");
 			} else {
-				return ResponseEntity.status(HttpStatus.OK).body(STR."Users found : \n \{users}");
+				return ResponseEntity.status(HttpStatus.OK).body(users.toString());
 			}
 		} else {
 			Optional<UserModel> user = userService.getUserById(id);
 			if (user.isEmpty()) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
 			} else {
-//				Gson gson=new Gson();
-//				String json = gson.toJson(user);
-				return ResponseEntity.status(HttpStatus.FOUND).body(STR."User Found :\n \{user}");
+				return ResponseEntity.status(HttpStatus.FOUND).body(user.toString());
 			}
 		}
 	}

@@ -25,4 +25,9 @@ public class UserRoles {
 	@ManyToMany(mappedBy = "roles")
 	private Set<UserModel> users = new HashSet<>();
 
+	@Override
+	public String toString() {
+		return STR."\{roleName}";
+	}
+
 }

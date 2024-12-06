@@ -2,6 +2,7 @@ package com.bytebattler.Restaurant.Services;
 
 import com.bytebattler.Restaurant.Exceptions.InvalidUserException;
 import com.bytebattler.Restaurant.Exceptions.UserAlreadyExistsException;
+import com.bytebattler.Restaurant.Exceptions.UserNotFoundException;
 import com.bytebattler.Restaurant.Models.UserModel;
 import com.bytebattler.Restaurant.Models.UserRoles;
 import com.bytebattler.Restaurant.Repository.RoleRepository;
@@ -95,7 +96,36 @@ public class UserService {
 		return userRepository.findById(id);
 	}
 
+	public boolean updateUser(long id, UserModel newUser) {
+		UserModel oldUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User Not Found"));
 
+		if (!newUser.getUserName().isBlank()) {
+			oldUser.setUserName(newUser.getUserName());
+		}
+		if (!newUser.getUserEmail().isBlank()) {
+			oldUser.setUserEmail(newUser.getUserEmail());
+		}
+		if (!newUser.getPassword().isBlank()) {
+			oldUser.setPassword(newUser.getPassword());
+		}
+		if (!newUser.getPhoneNumber().isBlank()) {
+			oldUser.setPhoneNumber(newUser.getPhoneNumber());
+		}
+//		if (!newUser.getRoles().isEmpty()) {
+//			Set<UserRoles> roles = new HashSet<>();
+//			roles.add((UserRoles) oldUser.getRoles());
+//			roles.add((UserRoles) newUser.getRoles());
+//			oldUser.setRoles(roles);
+//		}
+
+		try {
+			userRepository.save(oldUser);
+			return true;
+		} catch (Exception e) {
+			logger.error("User Not Update");
+			return false;
+		}
+	}
 }
 
 
