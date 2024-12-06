@@ -14,11 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 public class UserService {
-	private static Logger logger = LoggerFactory.getLogger(UserService.class);
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 	@Autowired
 	private UserRepository userRepository;
 
@@ -84,4 +86,16 @@ public class UserService {
 		String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
 		return email.matches(emailRegex);
 	}
+
+	public List<UserModel> getAllUsers() {
+		return userRepository.findAll();
+	}
+
+	public Optional<UserModel> getUserById(Long id) {
+		return userRepository.findById(id);
+	}
+
+
 }
+
+
