@@ -1,0 +1,23 @@
+5. API Design
+User Authentication:
+t		•	POST /api/auth/register - Register a new user.
+        •	POST /api/auth/login - Authenticate a user and return a JWT.
+Menu Management:
+t		•	GET /api/menu - Get all menu items.
+t		•	POST /api/menu - Add a new menu item.
+t		•	PUT /api/menu/:id - Update a menu item.
+t		•	DELETE /api/menu/:id - Delete a menu item.
+Order Management:
+		•	POST /api/orders - Create a new order.
+        •	GET /api/orders/:id - Get details of an order.
+        •	PUT /api/orders/:id - Update an order status.
+		•	DELETE /api/orders/:id - Cancel an order.
+Reservation Management:
+		•	POST /api/reservations - Make a reservation.
+        •	GET /api/reservations/:id - Get reservation details.
+        •	PUT /api/reservations/:id - Update reservation status.
+        •	DELETE /api/reservations/:id - Cancel a reservation.
+Payment Processing:
+		•	POST /api/payments - Process a payment.
+        •	GET /api/payments/:id - Get payment details.
+
