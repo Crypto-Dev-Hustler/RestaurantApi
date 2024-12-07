@@ -7,10 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 
 @Data
-@Document(collation = "MenuItems")
+@Document(collection = "MenuItems")
 public class MenuModel {
 	@Id
 	private String id;
+
+	MenuModel(){}
 
 	@NonNull
 	private String itemName;
@@ -19,9 +21,9 @@ public class MenuModel {
 	private String description;
 
 	@NonNull
-	private double price;
+	private Double price;
 
 	@NonNull
-	private boolean isAvailable;
+	private Boolean isAvailable;
 	private String imageUrl;
 }

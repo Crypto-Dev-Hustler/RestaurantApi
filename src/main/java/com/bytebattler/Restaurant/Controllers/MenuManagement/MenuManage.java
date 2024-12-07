@@ -13,26 +13,31 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("menu")
-public class MenuMange {
-	private static final Logger logger = LoggerFactory.getLogger(MenuMange.class);
+@RequestMapping("/menu")
+public class MenuManage {
+	private static final Logger logger = LoggerFactory.getLogger(MenuManage.class);
 	private final MenuService menuService;
 
 	@Autowired
-	public MenuMange(MenuService menuService) {
+	public MenuManage(MenuService menuService) {
 		this.menuService = menuService;
 	}
 
 	@PostMapping("/addItem")
 	public ResponseEntity<?> additem(@RequestBody MenuModel item) {
 		if (item == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data Not Provide");
-		} else {
-			if (menuService.addItem(item) == true) {
-				return ResponseEntity.ok().build();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data Not Provided");
+		}
+		try {
+			boolean isAdded = menuService.addItem(item);
+			if (isAdded) {
+				return ResponseEntity.status(HttpStatus.CREATED).body("Item added successfully");
 			} else {
-				return ResponseEntity.internalServerError().build();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add item");
 			}
+		} catch (Exception e) {
+			logger.error(String.valueOf(e.getCause()));
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
 		}
 	}
 
@@ -55,8 +60,8 @@ public class MenuMange {
 		}
 	}
 
-	@PutMapping("UpdateItem")
-	public ResponseEntity<?> updateItem(@RequestParam String id, MenuModel item) {
+	@PutMapping("/UpdateItem")
+	public ResponseEntity<?> updateItem(@RequestParam String id, @RequestBody MenuModel item) {
 		try {
 			boolean flag = menuService.updateItem(id, item);
 			if (flag) {
@@ -69,7 +74,6 @@ public class MenuMange {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
-
 
 	@DeleteMapping("DeleteItem")
 	public ResponseEntity<?> deleteItem(@RequestParam(required = false) String id) {
