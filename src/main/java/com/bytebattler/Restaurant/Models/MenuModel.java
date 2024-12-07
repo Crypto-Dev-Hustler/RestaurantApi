@@ -12,7 +12,8 @@ public class MenuModel {
 	@Id
 	private String id;
 
-	MenuModel(){}
+	MenuModel() {
+	}
 
 	@NonNull
 	private String itemName;
@@ -26,4 +27,9 @@ public class MenuModel {
 	@NonNull
 	private Boolean isAvailable;
 	private String imageUrl;
+
+	@Override
+	public String toString() {
+		return String.format("Item Name: %s\nDescription: %s\nPrice: %.2f\nAvailable: %s\nImage URL: %s\n", itemName, description, price, isAvailable ? "Yes" : "No", imageUrl);
+	}
 }

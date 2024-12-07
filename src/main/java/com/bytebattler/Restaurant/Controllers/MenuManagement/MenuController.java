@@ -14,12 +14,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/menu")
-public class MenuManage {
-	private static final Logger logger = LoggerFactory.getLogger(MenuManage.class);
+public class MenuController {
+	private static final Logger logger = LoggerFactory.getLogger(MenuController.class);
 	private final MenuService menuService;
 
 	@Autowired
-	public MenuManage(MenuService menuService) {
+	public MenuController(MenuService menuService) {
 		this.menuService = menuService;
 	}
 
