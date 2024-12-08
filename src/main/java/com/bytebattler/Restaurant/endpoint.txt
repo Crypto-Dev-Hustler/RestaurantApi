@@ -10,14 +10,19 @@ t		•	DELETE /api/menu/:id - Delete a menu item.
 Order Management:
 t		•	POST /api/orders - Create a new order.
 t       •	GET /api/orders/:id - Get details of an order.
-t        •	PUT /api/orders/:id - Update an order status.
+t       •	PUT /api/orders/:id - Update an order status.
 t		•	DELETE /api/orders/:id - Cancel an order.
 Reservation Management:
 t		•	POST /api/reservations - Make a reservation.
-t        •	GET /api/reservations/:id - Get reservation details.
-t        •	PUT /api/reservations/:id - Update reservation status.
-t        •	DELETE /api/reservations/:id - Cancel a reservation.
+t       •	GET /api/reservations/:id - Get reservation details.
+t       •	PUT /api/reservations/:id - Update reservation status.
+t       •	DELETE /api/reservations/:id - Cancel a reservation.
 Payment Processing:
-		•	POST /api/payments - Process a payment.
-        •	GET /api/payments/:id - Get payment details.
+t		•	POST /api/payments - Process a payment.
+t       •	GET /api/payments/:id - Get payment details.
 
+Review and Rating Management:
+t       • POST /api/reviews - Add a review.
+t       • GET /api/reviews/:id - Get review details.
+t       • PUT /api/reviews/:id - Update a review.
+t       • DELETE /api/reviews/:id - Delete a review.
