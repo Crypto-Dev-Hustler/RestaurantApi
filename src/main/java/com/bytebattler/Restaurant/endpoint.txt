@@ -13,10 +13,10 @@ t       •	GET /api/orders/:id - Get details of an order.
 t        •	PUT /api/orders/:id - Update an order status.
 t		•	DELETE /api/orders/:id - Cancel an order.
 Reservation Management:
-		•	POST /api/reservations - Make a reservation.
-        •	GET /api/reservations/:id - Get reservation details.
-        •	PUT /api/reservations/:id - Update reservation status.
-        •	DELETE /api/reservations/:id - Cancel a reservation.
+t		•	POST /api/reservations - Make a reservation.
+t        •	GET /api/reservations/:id - Get reservation details.
+t        •	PUT /api/reservations/:id - Update reservation status.
+t        •	DELETE /api/reservations/:id - Cancel a reservation.
 Payment Processing:
 		•	POST /api/payments - Process a payment.
         •	GET /api/payments/:id - Get payment details.

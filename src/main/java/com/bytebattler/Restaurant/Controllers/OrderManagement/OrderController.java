@@ -1,4 +1,4 @@
-package com.bytebattler.Restaurant.Controllers;
+package com.bytebattler.Restaurant.Controllers.OrderManagement;
 
 import com.bytebattler.Restaurant.Models.OrderModel;
 import com.bytebattler.Restaurant.Services.OrderService;
