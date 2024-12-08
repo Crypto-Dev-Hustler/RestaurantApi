@@ -1,27 +1,31 @@
 package com.bytebattler.Restaurant.DTO;
 
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
-public class MenuDTO {
+public class PaymentDTO {
 	private String id;
 
 	@NonNull
-	private String itemName;
+	private Double amount;
 
 	@NonNull
-	private String description;
+	private String currency;
 
 	@NonNull
-	private Double price;
+	private String paymentMethod;
 
 	@NonNull
-	private Boolean isAvailable;
+	private String status;
 
-	private String imageUrl;
+	private String transactionId;
+
+	private String message;
 }
+
 
 

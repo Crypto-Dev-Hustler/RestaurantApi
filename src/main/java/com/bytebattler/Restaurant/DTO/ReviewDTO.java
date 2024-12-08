@@ -6,22 +6,19 @@ import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
-public class MenuDTO {
+public class ReviewDTO {
 	private String id;
 
 	@NonNull
-	private String itemName;
+	private String userId;
 
 	@NonNull
-	private String description;
+	private String itemId;
 
 	@NonNull
-	private Double price;
+	private String reviewText;
 
-	@NonNull
-	private Boolean isAvailable;
-
-	private String imageUrl;
+	private Integer rating;
 }
 
 
