@@ -1,4 +1,4 @@
-package com.bytebattler.Restaurant.DTO;
+package com.bytebattler.Restaurant.DTO.Requset;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,3 +25,4 @@ public class MenuDTO {
 }
 
 
+ 

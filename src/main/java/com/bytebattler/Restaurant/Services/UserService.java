@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,15 +23,20 @@ import java.util.Set;
 @Service
 public class UserService {
 	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
+	private final RoleRepository roleRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	private RoleRepository roleRepository;
-
+	public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@Transactional
 	public boolean saveUser(UserModel user) {
+
 		Set<UserRoles> roles = new HashSet<>();
 
 		UserRoles checkRole = roleRepository.findByRoleName("USER");
@@ -58,8 +64,8 @@ public class UserService {
 
 
 		if (!user.getPassword().isEmpty()) {
-//			user.setPassword(passwordEncoder.encode(user.getPassword())); // Use PasswordEncoder
-			user.setPassword(user.getPassword()); // Use simple text password for now TODO: add password encoder after
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
+//		user.setPassword(user.getPassword());
 		}
 		user.setRoles(roles);
 		user.setUser_id(null);
@@ -125,6 +131,12 @@ public class UserService {
 			logger.error("User Not Update");
 			return false;
 		}
+	}
+
+	public boolean deleteUser(Long id) {
+		UserModel oldUser = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User Not Found"));
+		userRepository.deleteById(id);
+		return true;
 	}
 }
 

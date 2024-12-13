@@ -24,7 +24,7 @@ public class MenuController {
 	}
 
 	@PostMapping("/addItem")
-	public ResponseEntity<?> additem(@RequestBody MenuModel item) {
+	public ResponseEntity<?> addItem(@RequestBody MenuModel item) {
 		if (item == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Data Not Provided");
 		}

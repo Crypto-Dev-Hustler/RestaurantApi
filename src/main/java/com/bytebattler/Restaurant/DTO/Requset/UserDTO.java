@@ -1,4 +1,4 @@
-package com.bytebattler.Restaurant.DTO;
+package com.bytebattler.Restaurant.DTO.Requset;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,13 +9,15 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class UserDTO {
-	private Long userId;
 
 	@NonNull
 	private String userName;
 
 	@NonNull
 	private String userEmail;
+
+	@NonNull
+	private String password;
 
 	@NonNull
 	private String phoneNumber;
